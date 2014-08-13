@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<head><title>Browser Geolocation Test</title></head>
+<body>
+	<div><button onclick="whereAmI()">Display location</button></div>
+	<div id="output"></div>
+
+	<script>
+		function whereAmI() {
+			var output = document.getElementById('output');
+			output.innerHTML = '<p>Where you at, bro?</p>';
+
+			if (!navigator.geolocation) {
+				output.innerHTML = "<p>Geolocation functionality not supported</p>";
+			}
+
+			function found(position) {
+				console.log("found");
+				var lat = position.coords.latitude;
+				var longitude = position.coords.longitude;
+				output.innerHTML = '<p>Latitude: ' + latitude + '</p><p>Longitude: ' + longitude + '</p>'; 
+			}
+
+			function errorHandler(error) {
+				console.log(error.message);
+				output.innerHTML = '<p>Unable to locate</p>';
+			}
+
+			if (navigator.geolocation) {
+				console.log("locating...");
+				navigator.geolocation.getCurrentPosition(found, errorHandler);
+			}
+			
+		}
+	</script>
+</body>
+
